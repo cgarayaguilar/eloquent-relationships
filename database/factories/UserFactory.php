@@ -1,9 +1,10 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/** @var Factory $factory */
 
 use App\User;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Str;
 
 /*
@@ -18,8 +19,10 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $name = $faker->name;
     return [
-        'name' => $faker->name,
+        'name' => $name,
+        'slug' => Str::slug($name, '-'),
         'level_id' => $faker->randomElement([null, 1, 2, 3]),
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),

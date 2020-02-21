@@ -48,6 +48,40 @@
                         </div>
                     @endforeach
                 </div>
+
+            <h3>Videos</h3>
+            <div class="row">
+                @foreach($videos as $video)
+                    <div class="col-6">
+                        <div class="card mb-3">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="{{ $video->image->url }}" class="card-img" alt="">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $video->name }}</h5>
+                                        <h6 class="card-subtitle text-muted">
+                                            <span class="badge badge-secondary">{{ $video->category->name }}</span>
+
+                                            {{ $post->comments_count }}
+                                            {{ Str::plural('comentario', $video->comments_count) }}
+                                        </h6>
+                                        <p class="card-text small">
+                                            @foreach($video->tags as $tag)
+                                                <span class="badge badge-light">
+                                                        #{{ $tag->name }}
+                                                        </span>
+
+                                            @endforeach
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
             </div>
         </div>
     </section>

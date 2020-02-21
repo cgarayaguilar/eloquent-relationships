@@ -13,16 +13,15 @@
 
 Route::get('/', function () {
     $users = App\User::get();
-    return view('welcome', compact('users'));
+    return view('welcome', compact('users'))->with('level', 'location', 'profile');
 });
 
-Route::get('/profile/{id}', function ($id) {
-    $user = \App\User::find($id);
-    $posts = $user->posts()->with('category', 'image', 'tags')
-        ->withCount('comments')->get();
+Route::get('/profile/{id}', function ($slug) {
+    $user = \App\User::where('slug', $slug)->first();
+    $posts = $user->posts()->with('category', 'image', 'tags')->withCount('comments')->get();
     $videos = $user->videos()
-        ->with('category', 'image', 'tags')
-        ->withCount('comments')->get();
+        ->with('category', 'image', 'tags')->withCount('comments')->get();
+
     return view('profile', [
        'user' => $user,
         'posts' => $posts,
@@ -30,13 +29,13 @@ Route::get('/profile/{id}', function ($id) {
     ]);
 })->name('profile');
 
-Route::get('/level/{id}', function ($id) {
-    $level  = \App\User::find($id);
-    $posts = $level->posts()->with('category', 'image', 'tags')
-        ->withCount('comments')->get();
+Route::get('/level/{id}', function ($slug) {
+    $level  = \App\Level::where('slug', $slug)->first();
+    $posts = $level->posts()->with('category', 'image', 'tags')->withCount('comments')->get();
+
     $videos = $level->videos()
-        ->with('category', 'image', 'tags')
-        ->withCount('comments')->get();
+        ->with('category', 'image', 'tags')->withCount('comments')->get();
+
     return view('level', [
         'level' => $level,
         'posts' => $posts,

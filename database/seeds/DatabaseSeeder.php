@@ -13,16 +13,17 @@ class DatabaseSeeder extends Seeder
     {
         factory(\App\Group::class, 3)->create();
 
-        factory(\App\Level::class)->create(['name' => 'Oro']);
-        factory(\App\Level::class)->create(['name' => 'Plata']);
-        factory(\App\Level::class)->create(['name' => 'Bronce']);
-        // $this->call(UsersTableSeeder::class);
+        factory(\App\Level::class)->create(['name' => 'Oro', 'slug'=> 'oro']);
+        factory(\App\Level::class)->create(['name' => 'Plata', 'slug'=> 'plata']);
+        factory(\App\Level::class)->create(['name' => 'Bronce', 'slug'=> 'bronce']);
+
         factory(\App\User::class, 5)->create()->each(function($user) {
             $profile = $user->profile()->save(factory(\App\Profile::class)->make());
             $profile->location()->save(factory(\App\Location::class)->make());
             $user->groups()->attach($this->array(rand(1, 3)));
-            $user->image()->save(factory(\App\Image::class)->make(['url' => 'http://lorempixel.com/90/90']));
+            $user->image()->save(factory(\App\Image::class)->make(['url' => 'https://picsum.photos/90/90']));
         });
+
         factory(\App\Category::class, 4)->create();
         factory(\App\Tag::class, 12)->create();
 
