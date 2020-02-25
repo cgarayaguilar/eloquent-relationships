@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,15 +40,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile()
+    /**
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
-    public  function level()
+
+    public  function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
     }
-    public  function groups()
+
+    public  function groups(): BelongsToMany
     {
         return $this->belongsToMany(Group::class)->withTimestamps();
     }
@@ -55,15 +68,17 @@ class User extends Authenticatable
         return $this->hasOneThrough(Location::class, Profile::class);
     }
 
-    public  function posts()
+    public function posts()
     {
         return  $this->hasMany(Post::class);
     }
-    public  function videos()
+
+    public function videos()
     {
         return  $this->hasMany(Video::class);
     }
-    public  function comments()
+
+    public function comments()
     {
         return  $this->hasMany(Comment::class);
     }
@@ -72,5 +87,4 @@ class User extends Authenticatable
     {
         return $this->morphOne(Image::class, 'imageable');
     }
-
 }

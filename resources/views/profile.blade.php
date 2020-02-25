@@ -20,12 +20,14 @@
                 <strong>Instragram</strong>: {{ $user->profile->instagram }} <br />
                 <strong>Web</strong>: {{ $user->profile->web }} <br />
             </p>
-                <p>
+                <p class="border-bottom mb-2">
                     <strong>Pais</strong>: {{ $user->location->country }} <br />
-                    <strong>Nivel</strong>: @if($user->level)<a href="{{ route('level', $user->level->slug) }}">{{ $user->level->name }}</a><br />
+                    <strong>Nivel</strong>:
+                    @if($user->level)
+                        <a href="{{ route('level', $user->level->slug) }}">{{ $user->level->name }}</a>
                     @else
                           ---
-                    @endif <hr />
+                    @endif
                 </p>
                 <p>
                     <strong>Grupos</strong>:
@@ -47,21 +49,21 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                                <h5 class="card-title">{{ $post->name }}</h5>
-                                                <h6 class="card-subtitle text-muted">
-                                                   <span class="badge badge-secondary">{{ $post->category->name }}</span>
+                                            <h5 class="card-title">{{ $post->name }}</h5>
+                                            <h6 class="card-subtitle text-muted">
+                                               <span class="badge badge-secondary">{{ $post->category->name }}</span>
 
-                                                    {{ $post->comments_count }}
-                                                    {{ Str::plural('comentario', $post->comments_count) }}
-                                                </h6>
-                                                <p class="card-text small">
-                                                    @foreach($post->tags as $tag)
-                                                        <span class="badge badge-light">
-                                                        #{{ $tag->name }}
-                                                        </span>
+                                                {{ $post->comments_count }}
+                                                {{ Str::plural('comentario', $post->comments_count) }}
+                                            </h6>
+                                            <p class="card-text small">
+                                                @foreach($post->tags as $tag)
+                                                    <span class="badge badge-light">
+                                                    #{{ $tag->name }}
+                                                    </span>
 
-                                                    @endforeach
-                                                </p>
+                                                @endforeach
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

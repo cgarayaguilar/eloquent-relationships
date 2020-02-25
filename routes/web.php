@@ -11,22 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    $users = App\User::with('level', 'location', 'profile')->get();
-    return view('welcome', compact('users'));
-});
+Route::get('/', 'UserList');
 
-Route::get('/profile/{slug}', function ($slug) {
-    $user = \App\User::where('slug', $slug)->first();
-    $posts = $user->posts()->with('category', 'image', 'tags')->withCount('comments')->get();
-    $videos = $user->videos()->with('category', 'image', 'tags')->withCount('comments')->get();
-
-    return view('profile', [
-       'user' => $user,
-        'posts' => $posts,
-        'videos'=> $videos
-    ]);
-})->name('profile');
+Route::get('/profile/{user}', 'UserController')->name('profile');
 
 Route::get('/level/{slug}', function ($slug) {
     $level  = \App\Level::where('slug', $slug)->first();
